@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   # boxes at https://atlas.hashicorp.com/search.
   config.chef_zero.chef_repo_path = "."
   config.vm.box = "dev-pictbland-centos7.2"
-
+  config.vm.box_url="https://github.com/CommanderK5/packer-centos-template/releases/download/0.7.2/vagrant-centos-7.2.box"
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -28,7 +28,8 @@ Vagrant.configure("2") do |config|
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "192.168.33.10"
-
+  config.vm.hostname = "pictbland.net"
+  config.hostsupdater.aliases = ["dev"]
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
@@ -39,7 +40,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder ".", "/var/www/html",
+  config.vm.synced_folder ".", "/home/dev.pictbland.net/httpdocs",
     :create => true, 
     :owner => 'vagrant', 
     :group => 'vagrant', 
@@ -77,7 +78,7 @@ Vagrant.configure("2") do |config|
   config.omnibus.chef_version = :latest
 
   config.vm.provision "chef_solo" do |chef|
-    chef.cookbooks_path = ["chef/cookbooks"]
+    chef.cookbooks_path = ["cookbooks"]
 
     chef.add_recipe 'php'
   end
