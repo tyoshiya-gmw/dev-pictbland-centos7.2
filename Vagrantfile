@@ -40,7 +40,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder ".", "/home/dev.pictbland.net/httpdocs",
+  config.vm.synced_folder "httpdocs", "/home/dev.pictbland.net/httpdocs",
     :create => true, 
     :owner => 'vagrant', 
     :group => 'vagrant', 
@@ -81,5 +81,6 @@ Vagrant.configure("2") do |config|
     chef.cookbooks_path = ["cookbooks"]
 
     chef.add_recipe 'php'
+    chef.add_recipe 'git'
   end
 end
