@@ -27,9 +27,8 @@ Vagrant.configure("2") do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
+  config.vm.hostname = "dev.pictbland.net"
   config.vm.network "private_network", ip: "192.168.33.10"
-  config.vm.hostname = "pictbland.net"
-  config.hostsupdater.aliases = ["dev"]
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
@@ -80,6 +79,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.cookbooks_path = ["cookbooks"]
 
+    chef.add_recipe 'apache2'
     chef.add_recipe 'php'
     chef.add_recipe 'git'
   end
